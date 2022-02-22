@@ -1,0 +1,75 @@
+<!-- <div>
+  <div *ngIf="currentUser.userId" class="edit-form">
+    <h4>Tutorial</h4>
+    <form>
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          [(ngModel)]="currentUser.userName"
+          name="title"
+        />
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <input
+          type="text"
+          class="form-control"
+          id="description"
+          [(ngModel)]="currentUser.fullName"
+          name="description"
+        />
+      </div>
+</form>
+
+
+    <button class="badge badge-danger mr-2" (click)="deleteUser()">
+      Delete
+    </button>
+
+    <button
+      type="submit"
+      class="badge badge-success mb-2"
+      (click)="updateUser()"
+    >
+      Update
+    </button>
+    <p>{{ message }}</p>
+
+
+  <div *ngIf="!currentUser.userId">
+    <br />
+    <p>Cannot access this User...</p>
+  </div>
+</div> -->
+
+<p-card header="User {{currentUser.userName | uppercase}} detail" [style]="{'width': '400px', 'margin':'auto'}">
+  <div>
+    <div><label for="full-name">Full name: </label></div>
+    <input id="full-name" [(ngModel)]="currentUser.fullName" placeholder="Full name" pInputText/>
+  </div>
+  <div>
+    <div><label for="user-name">User name: </label></div>
+    <input id="user-name" [(ngModel)]="currentUser.userName" placeholder="User name" pInputText/>
+  </div>
+  <div>
+    <div><label for="password">Password: </label></div>
+    <p-password id="password" [(ngModel)]="currentUser.password" placeholder="Password" [toggleMask]="true" ></p-password>
+  </div>
+  <div>
+    <label for="created-date">Created Date: </label>
+    <!-- <input id="created-date" [(ngModel)]="currentUser.createdDate" placeholder="Created Date" disabled pInputText/> -->
+    <p>{{currentUser.createdDate| date:'dd/MM/yyyy HH:mm'}}</p>
+  </div>
+  <div>
+    <label for="last-login">Last login: </label><p>{{currentUser.lastLoginDate| date:'dd/MM/yyyy HH:mm'}}</p>
+    <!-- <input id="last-login" [(ngModel)]="currentUser.lastLoginDate" placeholder="Last login" disabled pInputText/> -->
+    <!-- <p>{{currentUser.lastLoginDate| date:'dd/MM/yyyy HH:mm'}}</p> -->
+  </div>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple type="button" label="Back" class="p-button-outlined p-button-rounded" (click)="goBack()"><i class="pi pi-replay"></i> </button>
+
+  </ng-template>
+</p-card>

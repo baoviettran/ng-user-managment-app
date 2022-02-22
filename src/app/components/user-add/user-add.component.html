@@ -1,0 +1,34 @@
+<p-card header="Add new user" [style]="{'width': '400px', 'margin':'auto'}">
+
+<div *ngIf="!submitted">
+  <div>
+    <div><label for="full-name">Full name: </label></div>
+    <input id="full-name" [(ngModel)]="User.fullName" placeholder="Full name" pInputText/>
+  </div>
+  <div>
+    <div><label for="email">Email: </label></div>
+    <input id="email" [(ngModel)]="User.email" placeholder="Email" pInputText/>
+  </div>
+  <div>
+    <div><label for="user-name">User name: </label></div>
+    <input id="user-name" [(ngModel)]="User.userName" placeholder="User name" pInputText/>
+  </div>
+  <div>
+    <div><label for="password">Password: </label></div>
+    <p-password id="password" [(ngModel)]="User.password" placeholder="Password" [toggleMask]="true" ></p-password>
+  </div>
+  <br>
+  <p-button (click)="saveUser()" label="Submit" icon="pi pi-check"></p-button>
+</div>
+<div *ngIf="submitted">
+  <h4>Tutorial was submitted successfully!</h4>
+  <button pButton (click)="newUser()" class="p-button-success" label="New" icon="pi pi-plus" ></button>
+</div>
+
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple type="button" label="Back" icon="pi pi-replay" class="p-button-outlined p-button-rounded" (click)="goBack()"></button>
+
+  </ng-template>
+</p-card>
+
