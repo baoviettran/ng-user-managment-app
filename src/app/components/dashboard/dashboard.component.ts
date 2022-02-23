@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserInfoService } from 'src/app/services/user-info.service';
 import { User } from '../../models/user';
 
@@ -9,7 +11,11 @@ import { User } from '../../models/user';
 })
 export class DashboardComponent implements OnInit {
   userList: User[] = [];
-  constructor(private userService: UserInfoService) { }
+  constructor(
+    private userService: UserInfoService,
+    private authenService: AuthenticationService,
+    private router: Router
+    ) { }
 
   ngOnInit(): void {
     this.getAllUsers();
@@ -23,5 +29,9 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  logout() {
+    this.authenService.logout();
+    this.router.navigate(['/login'])
+  }
 
 }

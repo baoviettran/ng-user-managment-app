@@ -1,27 +1,37 @@
 <p-card header="Add new user" [style]="{'width': '400px', 'margin':'auto'}">
 
-<div *ngIf="!submitted">
-  <div>
-    <div><label for="full-name">Full name: </label></div>
-    <input id="full-name" [(ngModel)]="User.fullName" placeholder="Full name" pInputText/>
-  </div>
-  <div>
-    <div><label for="email">Email: </label></div>
-    <input id="email" [(ngModel)]="User.email" placeholder="Email" pInputText/>
-  </div>
-  <div>
-    <div><label for="user-name">User name: </label></div>
-    <input id="user-name" [(ngModel)]="User.userName" placeholder="User name" pInputText/>
-  </div>
-  <div>
-    <div><label for="password">Password: </label></div>
-    <p-password id="password" [(ngModel)]="User.password" placeholder="Password" [toggleMask]="true" ></p-password>
+  <form #addForm="ngForm" *ngIf="!submitted">
+    <div class="p-float-label">
+    <input id="full-name" name="fullname" [(ngModel)]="User.fullName" #fullname="ngModel" required  pInputText/>
+    <label for="full-name">Full name</label>
+    <div><small id="fullname-help" [hidden]="fullname.valid || fullname.pristine" class="p-error block">Please enter your full name</small></div>
   </div>
   <br>
-  <p-button (click)="saveUser()" label="Submit" icon="pi pi-check"></p-button>
-</div>
+  <br>
+  <div class="p-float-label">
+    <input id="email" name="email" [(ngModel)]="User.email" #email="ngModel" email required  pInputText/>
+    <label for="email">Email</label>
+    <div><small id="email-help" [hidden]="email.valid || email.pristine" class="p-error block">Please enter your email</small></div>
+  </div>
+  <br>
+  <br>
+  <div class="p-float-label">
+    <input id="user-name" name="username" [(ngModel)]="User.userName" #username="ngModel" required  pInputText/>
+    <label for="user-name">User name</label>
+    <div><small id="username-help" [hidden]="username.valid || username.pristine" class="p-error block">Please enter your username</small></div>
+  </div>
+  <br>
+  <br>
+  <div class="p-float-label">
+  <p-password id="password" name="password" [(ngModel)]="User.password" #password="ngModel" required  [toggleMask]="true" ></p-password>
+  <label for="password">Password</label>
+  <div><small id="password-help" [hidden]="password.valid || password.pristine" class="p-error block">Please enter your password</small></div>
+  </div>
+  <br>
+  <p-button (click)="saveUser()" [disabled]="!addForm.form.valid" label="Submit" icon="pi pi-check"></p-button>
+</form>
 <div *ngIf="submitted">
-  <h4>Tutorial was submitted successfully!</h4>
+  <h4>User {{User.fullName}} was added successfully!</h4>
   <button pButton (click)="newUser()" class="p-button-success" label="New" icon="pi pi-plus" ></button>
 </div>
 

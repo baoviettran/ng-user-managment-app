@@ -9,29 +9,41 @@ import {
 } from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, tap } from 'rxjs/operators';
+import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class HttpConfigInterceptor implements HttpInterceptor {
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-      const token = localStorage.getItem('token');
+  constructor(public auth: AuthService) {}
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (request.headers.get("skip"))
+           return next.handle(request);
 
-        if (token) {
-            request = request.clone({ headers: request.headers.set('Authorization', 'Bearer ' + token) });
-        }
-
-        if (!request.headers.has('Content-Type')) {
-            request = request.clone({ headers: request.headers.set('Content-Type', 'application/json') });
-        }
-
-        request = request.clone({ headers: request.headers.set('Accept', 'application/json') });
-
-        return next.handle(request).pipe(
-            map((event: HttpEvent<any>) => {
-                if (event instanceof HttpResponse) {
-                    console.log('event--->>>', event);
-                }
-                return event;
-            }));
+    request = request.clone({
+      setHeaders: {
+        Authorization: `Bearer ${this.auth.getTokenString()}`
+      }
+    });
+    return next.handle(request).pipe(
+      tap(
+        event => this.handleResponse(request, event),
+        error => this.handleError(request, error)
+      )
+    );
+  }
+  handleResponse(req: HttpRequest<any>, event:any) {
+    console.log('Handling response for ', req.url, event);
+    if (event instanceof HttpResponse) {
+      console.log('Request for ', req.url,
+          ' Response Status ', event.status,
+          ' With body ', event.body);
     }
+  }
+
+  handleError(req: HttpRequest<any>, event:any) {
+    console.error('Request for ', req.url,
+          ' Response Status ', event.status,
+          ' With error ', event.error);
+  }
+
 }

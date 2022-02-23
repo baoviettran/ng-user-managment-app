@@ -1,3 +1,5 @@
+import { AuthService } from './services/auth.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserInfoService } from './services/user-info.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -19,6 +21,10 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HttpConfigInterceptor } from './interceptor/httpconfig.interceptor';
 import { LoginComponent } from './components/login/login.component';
 import { UserAddComponent } from './components/user-add/user-add.component'
+
+import { JwtModule, JwtModuleOptions } from "@auth0/angular-jwt";
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +36,9 @@ import { UserAddComponent } from './components/user-add/user-add.component'
   imports: [
     BrowserModule,
     HttpClientModule,
+    JwtModule.forRoot({
+      config: {}
+      }),
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
@@ -41,8 +50,14 @@ import { UserAddComponent } from './components/user-add/user-add.component'
   ],
   providers: [
     UserInfoService,
-    // { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
+    AuthenticationService,
+    AuthService,
+
+
+    { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+ }

@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class UserInfoService {
 
-  webApiUrl: string = 'https://baoviet1007-001-site1.etempurl.com/api/user/';
+  webApiUrl: string = 'http://localhost:5000/api/user/';
   constructor(private http: HttpClient) { }
 
   getAllUsers(): Observable<User[]> {

@@ -1,1 +1,19 @@
-<p>login works!</p>
+<p-card header="Login" [style]="{'width': '400px', 'margin':'auto'}">
+  <form #loginForm="ngForm">
+  <div class="p-float-label">
+    <input id="user-name" name="username" [(ngModel)]="account.userName" required #username="ngModel"  pInputText/>
+    <label for="user-name">User name</label>
+    <div><small id="username-help" [hidden]="username.valid || username.pristine" class="p-error block">Please enter your username</small></div>
+  </div>
+  <br>
+  <br>
+  <div class="p-float-label">
+    <p-password id="password" name="password" [(ngModel)]="account.password" #password="ngModel" required  [toggleMask]="true" ></p-password>
+    <label for="password">Password</label>
+    <div><small id="password-help" [hidden]="password.valid || password.pristine" class="p-error block">Please enter your password</small></div>
+  </div>
+  <br>
+  <button pButton  class="p-button-success" [disabled]="!loginForm.form.valid" type="submit" (click)="login()" label="Login"></button>
+</form>
+
+</p-card>
