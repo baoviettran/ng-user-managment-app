@@ -7,7 +7,7 @@ import { map } from 'rxjs';
 })
 export class AuthenticationService {
 
-  webApiUrl: string = 'http://localhost:5000/api/login';
+  webApiUrl: string = 'http://baoviet1007-001-site1.etempurl.com/api/login/';
 
   constructor(private http: HttpClient) { }
 
